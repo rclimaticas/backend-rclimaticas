@@ -11,8 +11,10 @@ CREATE TABLE "users" (
 -- CreateTable
 CREATE TABLE "materials" (
     "id" INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+    "media" TEXT NOT NULL,
     "topic" TEXT NOT NULL,
     "source" TEXT NOT NULL,
+    "link" TEXT NOT NULL,
     "date" DATETIME NOT NULL
 );
 
