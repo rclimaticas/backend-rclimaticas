@@ -4,13 +4,15 @@ import { prisma } from "../../utils/prisma";
 export class MaterialUpdateController {
     async update(req: Request, res: Response) {
         const materialId = parseInt(req.params.id);
-        const { topic, source, date } = req.body;
+        const { media, topic, source, link, date } = req.body;
         try {
             const updatedMaterial = await prisma.material.update({
                 where: { id: materialId },
                 data: {
+                    media, 
                     topic,
                     source,
+                    link,
                     date,
                 },
             });
