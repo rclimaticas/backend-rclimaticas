@@ -30,6 +30,6 @@ router.post("/login", loginController.authenticate)
 
 // materials routes
 router.post("/materials/material", AuthMiddleware, materialController.store);
-router.get("/materials", AuthMiddleware, materialGetController.index);
+router.get("/materials", materialGetController.index);
 router.put("/materials/:materialId", AuthMiddleware, materialUpdateController.update);
 router.delete("/materials/:materialId", AuthMiddleware, materialDeleteController.delete);
