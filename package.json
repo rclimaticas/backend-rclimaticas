@@ -8,9 +8,10 @@
     "node": "18.19.1"
   },
   "scripts": {
+    "postinstall": "prisma generate",
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "tsx watch src/server.ts",
-    "build": "tsc",
+    "build": "prisma generate && tsc",
     "start": "node dist/server.js"
   },
   "keywords": [],
