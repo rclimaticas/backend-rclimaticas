@@ -9,16 +9,24 @@ import { MaterialUpdateController } from './controllers/material/material.update
 import { MaterialDeleteController } from './controllers/material/material.delete.controller';
 
 
+import { ProfileUpdateController } from './controllers/user/profile/profile.update.controller';
+import { ProfileGetController } from './controllers/user/profile/profile.get.controller';
+import { ProfileDeleteController } from './controllers/user/profile/profile.delete.controller';
 
 // user const's
 const registerController = new UserRegisterController();
 const loginController = new UserLoginController();
 
-// payment const's
+// material const's
 const materialController = new MaterialCreateController();
 const materialGetController = new MaterialGetController();
 const materialUpdateController = new MaterialUpdateController();
 const materialDeleteController = new MaterialDeleteController();
+
+// profile const's
+const profileUpdateController = new ProfileUpdateController();
+const profileGetController = new ProfileGetController();
+const profileDeleteController = new ProfileDeleteController();
 
 
 
@@ -33,3 +41,9 @@ router.post("/materials/material", AuthMiddleware, materialController.store);
 router.get("/materials", materialGetController.index);
 router.put("/materials/:materialId", AuthMiddleware, materialUpdateController.update);
 router.delete("/materials/:materialId", AuthMiddleware, materialDeleteController.delete);
+
+// profile routes
+router.put("/profile/:id", AuthMiddleware, profileUpdateController.update)
+router.get("/profile/:id", AuthMiddleware, profileGetController.show)
+router.get("/profile", AuthMiddleware, profileGetController.index)
+router.delete("/profile/:id", AuthMiddleware, profileDeleteController.delete)

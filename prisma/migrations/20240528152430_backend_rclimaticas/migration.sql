@@ -4,7 +4,18 @@ CREATE TABLE "users" (
     "email" TEXT NOT NULL,
     "username" TEXT NOT NULL,
     "password" TEXT NOT NULL,
-    "createAt" DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "whatsapp" TEXT,
+    "gender" TEXT,
+    "instagram" TEXT,
+    "twitter" TEXT,
+    "linkedin" TEXT,
+    "facebook" TEXT,
+    "areaOfInterest" TEXT,
+    "contributionAxis" TEXT,
+    "themesBiomes" TEXT,
+    "themesCommunities" TEXT,
+    "weeklyAvailability" INTEGER NOT NULL DEFAULT 0,
+    "createdAt" DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" DATETIME NOT NULL
 );
 

@@ -14,19 +14,29 @@ datasource db {
 }
 
 model User {
-  id       Int    @id @default(autoincrement())
-  email    String @unique
-  username String @unique
-  password String
-  createAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-
+  id                 Int      @id @default(autoincrement())
+  email              String   @unique
+  username           String   @unique
+  password           String
+  whatsapp           String?
+  gender             String?
+  instagram          String?
+  twitter            String?
+  linkedin           String?
+  facebook           String?
+  areaOfInterest     String?
+  contributionAxis   String?
+  themesBiomes       String?
+  themesCommunities  String?
+  weeklyAvailability Int      @default(0)
+  createdAt          DateTime @default(now())
+  updatedAt          DateTime @updatedAt
 
   @@map("users")
 }
 
 model Material {
-  id     Int    @id @default(autoincrement())
+  id     Int      @id @default(autoincrement())
   media  String
   topic  String
   source String
