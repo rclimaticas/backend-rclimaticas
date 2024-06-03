@@ -1,6 +1,6 @@
 -- CreateTable
 CREATE TABLE "users" (
-    "id" INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+    "id" SERIAL NOT NULL,
     "email" TEXT NOT NULL,
     "username" TEXT NOT NULL,
     "password" TEXT NOT NULL,
@@ -10,23 +10,27 @@ CREATE TABLE "users" (
     "twitter" TEXT,
     "linkedin" TEXT,
     "facebook" TEXT,
-    "areaOfInterest" TEXT,
-    "contributionAxis" TEXT,
-    "themesBiomes" TEXT,
-    "themesCommunities" TEXT,
+    "areaOfInterest" TEXT[],
+    "contributionAxis" TEXT[],
+    "themesBiomes" TEXT[],
+    "themesCommunities" TEXT[],
     "weeklyAvailability" INTEGER NOT NULL DEFAULT 0,
-    "createdAt" DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    "updatedAt" DATETIME NOT NULL
+    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updatedAt" TIMESTAMP(3) NOT NULL,
+
+    CONSTRAINT "users_pkey" PRIMARY KEY ("id")
 );
 
 -- CreateTable
 CREATE TABLE "materials" (
-    "id" INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+    "id" SERIAL NOT NULL,
     "media" TEXT NOT NULL,
     "topic" TEXT NOT NULL,
     "source" TEXT NOT NULL,
     "link" TEXT NOT NULL,
-    "date" DATETIME NOT NULL
+    "date" TIMESTAMP(3) NOT NULL,
+
+    CONSTRAINT "materials_pkey" PRIMARY KEY ("id")
 );
 
 -- CreateIndex
