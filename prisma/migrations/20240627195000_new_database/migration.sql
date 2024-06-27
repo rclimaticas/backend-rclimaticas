@@ -10,11 +10,12 @@ CREATE TABLE "users" (
     "twitter" TEXT,
     "linkedin" TEXT,
     "facebook" TEXT,
+    "imageBase64" TEXT,
     "areaOfInterest" TEXT[],
     "contributionAxis" TEXT[],
     "themesBiomes" TEXT[],
     "themesCommunities" TEXT[],
-    "weeklyAvailability" INTEGER NOT NULL DEFAULT 0,
+    "weeklyAvailability" TEXT,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
 
