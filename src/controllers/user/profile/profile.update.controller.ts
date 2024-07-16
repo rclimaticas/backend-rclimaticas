@@ -19,7 +19,8 @@ export class ProfileUpdateController {
             weeklyAvailability,
             themesBiomes,
             themesCommunities,
-            imageBase64
+            imageBase64,
+            roles,
         } = req.body;
         try {
 
@@ -41,6 +42,7 @@ export class ProfileUpdateController {
                     weeklyAvailability,
                     themesBiomes,
                     themesCommunities,
+                    roles,
                 },
                 
             });

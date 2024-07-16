@@ -3,7 +3,7 @@ import { prisma } from "../../utils/prisma";
 
 export class MaterialCreateController {
     async store(req: Request, res: Response) {
-        const { media, topic, source, link, date } = req.body;
+        const { media, topic, source, link, fileUrl, date } = req.body;
         try {
             const newMaterial = await prisma.material.create({
                 data: {
@@ -12,6 +12,7 @@ export class MaterialCreateController {
                     source,
                     link,
                     date,
+                    fileUrl,
                 },
             });
             res.status(201).json(newMaterial);

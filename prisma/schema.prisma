@@ -29,6 +29,7 @@ model User {
   contributionAxis   String[]
   themesBiomes       String[]
   themesCommunities  String[]
+  roles              String[]
   weeklyAvailability String?
   createdAt          DateTime @default(now())
   updatedAt          DateTime @updatedAt
@@ -37,12 +38,13 @@ model User {
 }
 
 model Material {
-  id     Int      @id @default(autoincrement())
-  media  String
-  topic  String
-  source String
-  link   String
-  date   DateTime @map("date")
+  id      Int      @id @default(autoincrement())
+  media   String
+  topic   String
+  source  String
+  link    String
+  fileUrl String?
+  date    DateTime @map("date")
 
   @@map("materials")
 }
