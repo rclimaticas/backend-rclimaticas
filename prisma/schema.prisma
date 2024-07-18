@@ -38,13 +38,14 @@ model User {
 }
 
 model Material {
-  id      Int      @id @default(autoincrement())
-  media   String
-  topic   String
-  source  String
-  link    String
-  fileUrl String?
-  date    DateTime @map("date")
+  id              Int      @id @default(autoincrement())
+  name            String
+  email           String
+  publicationType String
+  subjectType     String
+  fileUrl         String?
+  fileUpload      String?
+  date            DateTime @map("date")
 
   @@map("materials")
 }
