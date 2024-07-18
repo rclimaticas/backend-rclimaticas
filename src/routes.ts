@@ -38,7 +38,6 @@ router.post("/login", loginController.authenticate)
 
 // materials routes
 router.post("/materials/material", materialController.store);
-router.get("/materials", materialGetController.index);
 router.put("/materials/:materialId", AuthMiddleware, materialUpdateController.update);
 router.delete("/materials/:materialId", AuthMiddleware, materialDeleteController.delete);
 
