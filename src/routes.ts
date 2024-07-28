@@ -13,6 +13,9 @@ import { ProfileUpdateController } from './controllers/user/profile/profile.upda
 import { ProfileGetController } from './controllers/user/profile/profile.get.controller';
 import { ProfileDeleteController } from './controllers/user/profile/profile.delete.controller';
 
+// multer const
+import { upload } from './utils/multerConfig';
+
 // user const's
 const registerController = new UserRegisterController();
 const loginController = new UserLoginController();
@@ -37,7 +40,7 @@ router.post("/register", registerController.store);
 router.post("/login", loginController.authenticate)
 
 // materials routes
-router.post("/materials/material", materialController.store);
+router.post("/materials/material", upload.single('fileUpload'), materialController.store);
 router.put("/materials/:materialId", AuthMiddleware, materialUpdateController.update);
 router.delete("/materials/:materialId", AuthMiddleware, materialDeleteController.delete);
 
