@@ -38,14 +38,24 @@ model User {
 }
 
 model Material {
-  id              Int      @id @default(autoincrement())
+  id              Int          @id @default(autoincrement())
   name            String
   email           String
   publicationType String
   subjectType     String
   fileUrl         String?
-  fileUpload      String?
-  date            DateTime @map("date")
+  date            DateTime     @map("date")
+  FileUpload      FileUpload[]
 
   @@map("materials")
+}
+
+model FileUpload {
+  id         Int      @id @default(autoincrement())
+  path       String
+  material   Material @relation(fields: [materialId], references: [id])
+  date       DateTime @map("date")
+  materialId Int
+
+  @@map("fileupload")
 }

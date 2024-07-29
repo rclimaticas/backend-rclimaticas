@@ -1,20 +1,23 @@
-import { Router } from 'express'
+import { Router } from 'express';
 import { UserRegisterController } from './controllers/user/user-register.controller';
 import { UserLoginController } from './controllers/user/user-login.controller';
 import { AuthMiddleware } from './middlewares/auth';
+import multer from 'multer';
+import { prisma } from './utils/prisma';
+import fs from 'fs';
+import path from 'path';
 
 import { MaterialCreateController } from './controllers/material/material.create.controller';
 import { MaterialGetController } from './controllers/material/material.get.contoller';
 import { MaterialUpdateController } from './controllers/material/material.update.controler';
 import { MaterialDeleteController } from './controllers/material/material.delete.controller';
 
-
 import { ProfileUpdateController } from './controllers/user/profile/profile.update.controller';
 import { ProfileGetController } from './controllers/user/profile/profile.get.controller';
 import { ProfileDeleteController } from './controllers/user/profile/profile.delete.controller';
 
 // multer const
-import { upload } from './utils/multerConfig';
+const upload = multer();
 
 // user const's
 const registerController = new UserRegisterController();
@@ -31,22 +34,62 @@ const profileUpdateController = new ProfileUpdateController();
 const profileGetController = new ProfileGetController();
 const profileDeleteController = new ProfileDeleteController();
 
-
-
 export const router = Router();
 
 // user routes
 router.post("/register", registerController.store);
-router.post("/login", loginController.authenticate)
+router.post("/login", loginController.authenticate);
+
+// Helper to get current directory in CommonJS
+const __dirname = path.resolve();
 
 // materials routes
-router.post("/materials/material", upload.single('fileUpload'), materialController.store);
+router.post('/upload/:materialId', upload.single('fileUpload'), async (req, res) => {
+    if (!req.file) {
+        return res.status(400).send('Nenhum arquivo enviado');
+    }
+
+    const { originalname, buffer } = req.file;
+    const { materialId } = req.params; // Obtenha o materialId da URL
+
+    try {
+        // Verifique se o materialId existe
+        const material = await prisma.material.findUnique({
+            where: { id: parseInt(materialId, 10) },
+        });
+
+        if (!material) {
+            return res.status(404).send('Material não encontrado');
+        }
+
+        // Crie o caminho completo para salvar o arquivo
+        const uploadPath = path.join(__dirname, 'uploads', originalname);
+
+        // Salve o arquivo no sistema de arquivos
+        fs.writeFileSync(uploadPath, buffer);
+
+        // Crie o registro FileUpload com o caminho do arquivo
+        const file = await prisma.fileUpload.create({
+            data: {
+                path: uploadPath,
+                date: new Date(),
+                materialId: parseInt(materialId, 10),
+            },
+        });
+        res.status(201).json(file);
+    } catch (error) {
+        console.error(error);
+        res.status(500).send('Erro ao salvar o arquivo');
+    }
+});
+
+router.post("/materials/material", materialController.store);
 router.put("/materials/:materialId", AuthMiddleware, materialUpdateController.update);
 router.delete("/materials/:materialId", AuthMiddleware, materialDeleteController.delete);
 
 // profile routes
-router.put("/profile/:id", AuthMiddleware, profileUpdateController.update)
-router.get("/profile/:id", AuthMiddleware, profileGetController.show)
-router.get("/profile", AuthMiddleware, profileGetController.index)
-router.delete("/profile/:id", AuthMiddleware, profileDeleteController.delete)
-router.post("/profile/:id", AuthMiddleware, profileUpdateController.update)
+router.put("/profile/:id", AuthMiddleware, profileUpdateController.update);
+router.get("/profile/:id", AuthMiddleware, profileGetController.show);
+router.get("/profile", AuthMiddleware, profileGetController.index);
+router.delete("/profile/:id", AuthMiddleware, profileDeleteController.delete);
+router.post("/profile/:id", AuthMiddleware, profileUpdateController.update);

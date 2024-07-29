@@ -4,7 +4,6 @@ import { prisma } from "../../utils/prisma";
 export class MaterialCreateController {
     async store(req: Request, res: Response) {
         const { name, email, publicationType, subjectType, fileUrl } = req.body;
-        const fileUpload = req.file?.filename;
 
         try {
             const newMaterial = await prisma.material.create({
@@ -14,7 +13,6 @@ export class MaterialCreateController {
                     publicationType,
                     subjectType,
                     fileUrl,
-                    fileUpload,
                     date: new Date() 
                 },
             });
