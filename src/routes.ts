@@ -50,10 +50,9 @@ router.post('/upload/:materialId', upload.single('fileUpload'), async (req, res)
     }
 
     const { originalname, buffer } = req.file;
-    const { materialId } = req.params; // Obtenha o materialId da URL
+    const { materialId } = req.params;
 
     try {
-        // Verifique se o materialId existe
         const material = await prisma.material.findUnique({
             where: { id: parseInt(materialId, 10) },
         });
@@ -62,13 +61,8 @@ router.post('/upload/:materialId', upload.single('fileUpload'), async (req, res)
             return res.status(404).send('Material não encontrado');
         }
 
-        // Crie o caminho completo para salvar o arquivo
         const uploadPath = path.join(__dirname, 'uploads', originalname);
-
-        // Salve o arquivo no sistema de arquivos
         fs.writeFileSync(uploadPath, buffer);
-
-        // Crie o registro FileUpload com o caminho do arquivo
         const file = await prisma.fileUpload.create({
             data: {
                 path: uploadPath,
@@ -86,6 +80,7 @@ router.post('/upload/:materialId', upload.single('fileUpload'), async (req, res)
 router.post("/materials/material", materialController.store);
 router.put("/materials/:materialId", AuthMiddleware, materialUpdateController.update);
 router.delete("/materials/:materialId", AuthMiddleware, materialDeleteController.delete);
+router.get("/materials", materialGetController.list)
 
 // profile routes
 router.put("/profile/:id", AuthMiddleware, profileUpdateController.update);

@@ -2,18 +2,42 @@ import { Request, Response } from "express";
 import { prisma } from "../../utils/prisma";
 
 export class MaterialGetController {
-    async show(req: Request, res: Response) {
-        const materialId = parseInt(req.params.id);
+    async list(req: Request, res: Response): Promise<void> {
         try {
-            const material = await prisma.material.findUnique({
-                where: { id: materialId },
+            const materials = await prisma.material.findMany({
+                include: {
+                    FileUpload: true,
+                },
             });
-            if (!material) {
-                return res.status(404).json({ error: "Material não encontrado." });
-            }
-            res.json(material);
+            res.json(materials);
         } catch (error) {
-            res.status(500).json({ error: "Erro ao buscar o material." });
+            res.status(500).json({ error: "Erro ao buscar os materiais." });
         }
     }
 }
+
+// vai servir mais tarde para apagar os testes no backend de envio de materials e deixar bonitinho :)
+// export class MaterialsController {
+//     async list(req: Request, res: Response): Promise<void> {
+//         try {
+//             const materials = await prisma.material.findMany({
+//                 include: {
+//                     FileUpload: true,
+//                 },
+//             });
+//             res.json(materials);
+//         } catch (error) {
+//             res.status(500).json({ error: "Erro ao buscar os materiais." });
+//         }
+//     }
+
+//     async deleteAll(req: Request, res: Response): Promise<void> {
+//         try {
+//             await prisma.material.deleteMany({});
+//             res.status(200).json({ message: "Todos os materiais foram apagados com sucesso." });
+//         } catch (error) {
+//             res.status(500).json({ error: "Erro ao apagar os materiais." });
+//         }
+//     }
+// }
+
