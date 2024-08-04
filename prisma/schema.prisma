@@ -33,6 +33,7 @@ model User {
   weeklyAvailability String?
   createdAt          DateTime @default(now())
   updatedAt          DateTime @updatedAt
+  Impacts            Impacts[]
 
   @@map("users")
 }
@@ -58,4 +59,21 @@ model FileUpload {
   materialId Int
 
   @@map("fileupload")
+}
+
+model Impacts {
+  id                Int      @id @default(autoincrement())
+  subject           String
+  urgency           String
+  locality          String
+  support           String
+  affectedCommunity String
+  biomes            String[]
+  situation         String
+  contribution      String
+  date              DateTime @map("date")
+  userId            Int
+  user              User     @relation(fields: [userId], references: [id])
+
+  @@map("impacts")
 }

@@ -8,13 +8,15 @@ import fs from 'fs';
 import path from 'path';
 
 import { MaterialCreateController } from './controllers/material/material.create.controller';
-import { MaterialGetController } from './controllers/material/material.get.contoller';
+import { MaterialGetController } from './controllers/material/material.get.controller';
 import { MaterialUpdateController } from './controllers/material/material.update.controler';
 import { MaterialDeleteController } from './controllers/material/material.delete.controller';
 
 import { ProfileUpdateController } from './controllers/user/profile/profile.update.controller';
 import { ProfileGetController } from './controllers/user/profile/profile.get.controller';
 import { ProfileDeleteController } from './controllers/user/profile/profile.delete.controller';
+
+import { ImpactsCreateController } from './controllers/impactos/impacts.create.controller';
 
 // multer const
 const upload = multer();
@@ -33,6 +35,9 @@ const materialDeleteController = new MaterialDeleteController();
 const profileUpdateController = new ProfileUpdateController();
 const profileGetController = new ProfileGetController();
 const profileDeleteController = new ProfileDeleteController();
+
+//impacts const's
+const impactsCreateController = new ImpactsCreateController();
 
 export const router = Router();
 
@@ -80,7 +85,9 @@ router.post('/upload/:materialId', upload.single('fileUpload'), async (req, res)
 router.post("/materials/material", materialController.store);
 router.put("/materials/:materialId", AuthMiddleware, materialUpdateController.update);
 router.delete("/materials/:materialId", AuthMiddleware, materialDeleteController.delete);
+
 router.get("/materials", materialGetController.list)
+
 
 // profile routes
 router.put("/profile/:id", AuthMiddleware, profileUpdateController.update);
@@ -88,3 +95,6 @@ router.get("/profile/:id", AuthMiddleware, profileGetController.show);
 router.get("/profile", AuthMiddleware, profileGetController.index);
 router.delete("/profile/:id", AuthMiddleware, profileDeleteController.delete);
 router.post("/profile/:id", AuthMiddleware, profileUpdateController.update);
+
+// impacts routes
+router.post("/impacts", AuthMiddleware, impactsCreateController.store)

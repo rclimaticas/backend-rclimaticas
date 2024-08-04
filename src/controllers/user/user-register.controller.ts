@@ -6,13 +6,13 @@ export class UserRegisterController {
     async store(req: Request, res: Response) {
         const { email, username, password } = req.body;
         
-        // Verifica se o usuário já existe pelo nome de usuário
+        // verifica se o usuário já existe pelo nome de usuário
         const userByUsername = await prisma.user.findUnique({ where: { username } });
         if (userByUsername) {
             return res.status(400).json({ error: "Nome de usuário já está em uso!" });
         }
 
-        // Verifica se o usuário já existe pelo email
+        // verifica se o usuário já existe pelo email
         const userByEmail = await prisma.user.findUnique({ where: { email } });
         if (userByEmail) {
             return res.status(400).json({ error: "E-mail já está em uso!" });
@@ -26,6 +26,8 @@ export class UserRegisterController {
                 password: hash_password,
             },
         });
+
+
 
         return res.status(201).json({ user });
     }

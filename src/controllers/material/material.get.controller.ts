@@ -1,6 +1,8 @@
-import { Request, Response } from "express";
-import { prisma } from "../../utils/prisma";
+import { Request, Response } from 'express';
+import { PrismaClient } from '@prisma/client';
 
+
+const prisma = new PrismaClient();
 export class MaterialGetController {
     async list(req: Request, res: Response): Promise<void> {
         try {
@@ -15,7 +17,6 @@ export class MaterialGetController {
         }
     }
 }
-
 // vai servir mais tarde para apagar os testes no backend de envio de materials e deixar bonitinho :)
 // export class MaterialsController {
 //     async list(req: Request, res: Response): Promise<void> {
