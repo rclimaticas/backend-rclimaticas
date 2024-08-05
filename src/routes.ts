@@ -85,6 +85,7 @@ router.post('/upload/:materialId', upload.single('fileUpload'), async (req, res)
 });
 
 router.post("/materials", materialController.store);
+router.get("/materials/material", materialGetController.list)
 router.put("/materials/:materialId", AuthMiddleware, materialUpdateController.update);
 router.delete("/materials/:materialId", AuthMiddleware, materialDeleteController.delete);
 router.get("/materials", materialGetController.list);

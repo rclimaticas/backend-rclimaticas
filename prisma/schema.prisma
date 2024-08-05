@@ -25,6 +25,8 @@ model User {
   linkedin           String?
   facebook           String?
   imageBase64        String?
+  city               String?
+  state              String?
   areaOfInterest     String[]
   contributionAxis   String[]
   themesBiomes       String[]
