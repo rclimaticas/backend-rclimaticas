@@ -23,7 +23,7 @@ export class NewsletterCreateController {
             });
             let mailOptions = {
                 from: 'r.climaticas@gmail.com',
-                to: 'jvittor.contatos@gmail.com',
+                to: 'rafael@gamba.org.br',
                 subject: 'Novo Email cadastrado na Newsletter',
                 text: `
                     Um novo email foi cadastrado na Newsletter:
