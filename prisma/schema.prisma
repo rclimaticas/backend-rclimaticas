@@ -79,3 +79,12 @@ model Impacts {
 
   @@map("impacts")
 }
+
+model Newsletter {
+  id                Int      @id @default(autoincrement())
+  name              String
+  email             String
+  date              DateTime @map("date")
+
+  @@map("newsletter")
+} 

@@ -21,6 +21,8 @@ export class ProfileUpdateController {
             themesCommunities,
             imageBase64,
             roles,
+            city,
+            state,
         } = req.body;
         try {
 
@@ -43,6 +45,8 @@ export class ProfileUpdateController {
                     themesBiomes,
                     themesCommunities,
                     roles,
+                    city,
+                    state,
                 },
                 
             });
