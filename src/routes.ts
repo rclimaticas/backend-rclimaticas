@@ -17,38 +17,40 @@ import { ProfileGetController } from './controllers/user/profile/profile.get.con
 import { ProfileDeleteController } from './controllers/user/profile/profile.delete.controller';
 
 import { ImpactsCreateController } from './controllers/impactos/impacts.create.controller';
+import { ImpactsListController } from './controllers/impactos/impacts.list.controller';
 
-// multer const
+// Multer configuration
 const upload = multer();
 
-// user const's
+// User controllers
 const registerController = new UserRegisterController();
 const loginController = new UserLoginController();
 
-// material const's
+// Material controllers
 const materialController = new MaterialCreateController();
 const materialGetController = new MaterialGetController();
 const materialUpdateController = new MaterialUpdateController();
 const materialDeleteController = new MaterialDeleteController();
 
-// profile const's
+// Profile controllers
 const profileUpdateController = new ProfileUpdateController();
 const profileGetController = new ProfileGetController();
 const profileDeleteController = new ProfileDeleteController();
 
-//impacts const's
+// Impacts controllers
 const impactsCreateController = new ImpactsCreateController();
+const impactsListController = new ImpactsListController();
 
 export const router = Router();
 
-// user routes
+// User routes
 router.post("/register", registerController.store);
 router.post("/login", loginController.authenticate);
 
 // Helper to get current directory in CommonJS
 const __dirname = path.resolve();
 
-// materials routes
+// Material routes
 router.post('/upload/:materialId', upload.single('fileUpload'), async (req, res) => {
     if (!req.file) {
         return res.status(400).send('Nenhum arquivo enviado');
@@ -82,19 +84,17 @@ router.post('/upload/:materialId', upload.single('fileUpload'), async (req, res)
     }
 });
 
-router.post("/materials/material", materialController.store);
+router.post("/materials", materialController.store);
 router.put("/materials/:materialId", AuthMiddleware, materialUpdateController.update);
 router.delete("/materials/:materialId", AuthMiddleware, materialDeleteController.delete);
+router.get("/materials", materialGetController.list);
 
-router.get("/materials", materialGetController.list)
-
-
-// profile routes
+// Profile routes
 router.put("/profile/:id", AuthMiddleware, profileUpdateController.update);
 router.get("/profile/:id", AuthMiddleware, profileGetController.show);
 router.get("/profile", AuthMiddleware, profileGetController.index);
 router.delete("/profile/:id", AuthMiddleware, profileDeleteController.delete);
-router.post("/profile/:id", AuthMiddleware, profileUpdateController.update);
 
-// impacts routes
-router.post("/impacts", AuthMiddleware, impactsCreateController.store)
+// Impacts routes
+router.post("/impacts", AuthMiddleware, impactsCreateController.store);
+router.get("/impacts/user/:userId", AuthMiddleware, impactsListController.index);
