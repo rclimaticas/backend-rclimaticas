@@ -19,6 +19,8 @@ import { ProfileDeleteController } from './controllers/user/profile/profile.dele
 import { ImpactsCreateController } from './controllers/impactos/impacts.create.controller';
 import { ImpactsListController } from './controllers/impactos/impacts.list.controller';
 
+import { NewsletterCreateController } from './controllers/newsletter/newsletter.create.controller';
+
 // Multer configuration
 const upload = multer();
 
@@ -40,6 +42,9 @@ const profileDeleteController = new ProfileDeleteController();
 // Impacts controllers
 const impactsCreateController = new ImpactsCreateController();
 const impactsListController = new ImpactsListController();
+
+// Newsletter controllers
+const newsletterCreateController = new NewsletterCreateController();
 
 export const router = Router();
 
@@ -99,3 +104,6 @@ router.delete("/profile/:id", AuthMiddleware, profileDeleteController.delete);
 // Impacts routes
 router.post("/impacts", AuthMiddleware, impactsCreateController.store);
 router.get("/impacts/user/:userId", AuthMiddleware, impactsListController.index);
+
+// Newsletter routes
+router.post("/newsletter", newsletterCreateController.store)

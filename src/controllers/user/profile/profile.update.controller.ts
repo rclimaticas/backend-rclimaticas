@@ -23,6 +23,7 @@ export class ProfileUpdateController {
             roles,
             city,
             state,
+            organization
         } = req.body;
         try {
 
@@ -47,6 +48,7 @@ export class ProfileUpdateController {
                     roles,
                     city,
                     state,
+                    organization,
                 },
                 
             });

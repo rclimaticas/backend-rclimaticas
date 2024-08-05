@@ -27,6 +27,7 @@ model User {
   imageBase64        String?
   city               String?
   state              String?
+  organization       String?
   areaOfInterest     String[]
   contributionAxis   String[]
   themesBiomes       String[]
