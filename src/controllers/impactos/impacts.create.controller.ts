@@ -38,7 +38,7 @@ export class ImpactsCreateController {
             });
             let mailOptions = {
                 from: 'r.climaticas@gmail.com',
-                to: 'jvittor.contatos@gmail.com',
+                to: 'rafael@gamba.org.br',
                 subject: 'Novo Impacto Criado',
                 text: `
                     Um novo impacto foi criado com os seguintes detalhes:
