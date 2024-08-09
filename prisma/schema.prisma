@@ -32,6 +32,7 @@ model User {
   contributionAxis   String[]
   themesBiomes       String[]
   themesCommunities  String[]
+  peoples            String[]
   roles              String[]
   weeklyAvailability String?
   createdAt          DateTime @default(now())
