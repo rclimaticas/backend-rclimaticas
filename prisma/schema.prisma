@@ -49,6 +49,7 @@ model Material {
   publicationType String
   subjectType     String
   fileUrl         String?
+  description     String?
   date            DateTime     @map("date")
   FileUpload      FileUpload[]
 
