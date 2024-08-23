@@ -21,6 +21,8 @@ import { ImpactsListController } from './controllers/impactos/impacts.list.contr
 
 import { NewsletterCreateController } from './controllers/newsletter/newsletter.create.controller';
 
+import { NewsScrapeController } from './controllers/webscraping/news-scrape.controller'
+
 // Multer configuration
 const upload = multer();
 
@@ -45,6 +47,10 @@ const impactsListController = new ImpactsListController();
 
 // Newsletter controllers
 const newsletterCreateController = new NewsletterCreateController();
+
+// Webscraping controlles
+const newsScrapeController = new NewsScrapeController();
+
 
 export const router = Router();
 
@@ -107,3 +113,6 @@ router.get("/impacts/user/:userId", AuthMiddleware, impactsListController.index)
 
 // Newsletter routes
 router.post("/newsletter", newsletterCreateController.store)
+
+// News scraping route
+router.get("/scrape-news", newsScrapeController.scrape); 
