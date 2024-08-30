@@ -5,7 +5,7 @@ const prisma_1 = require("../../../utils/prisma");
 class ProfileUpdateController {
     async update(req, res) {
         const userId = parseInt(req.params.id);
-        const { email, username, password, whatsapp, gender, instagram, twitter, linkedin, facebook, areaOfInterest, contributionAxis, weeklyAvailability, themesBiomes, themesCommunities, imageBase64, roles, } = req.body;
+        const { email, username, password, whatsapp, gender, instagram, twitter, linkedin, facebook, areaOfInterest, contributionAxis, weeklyAvailability, themesBiomes, themesCommunities, imageBase64, roles, city, state, organization, peoples, } = req.body;
         try {
             const updatedUser = await prisma_1.prisma.user.update({
                 where: { id: userId },
@@ -26,6 +26,10 @@ class ProfileUpdateController {
                     themesBiomes,
                     themesCommunities,
                     roles,
+                    city,
+                    state,
+                    organization,
+                    peoples,
                 },
             });
             res.json(updatedUser);

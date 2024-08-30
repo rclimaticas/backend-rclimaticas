@@ -29,15 +29,17 @@ export class ImpactsCreateController {
                 return res.status(404).json({ error: "Usuário não encontrado." });
             }
 
-            let transporter = nodemailer.createTransport({
-                service: 'gmail', 
+            const transporter = nodemailer.createTransport({
+                host: 'mail.privateemail.com',
+                port: 465, // ou 587 para TLS
+                secure: true, // true para 465, false para outras portas
                 auth: {
-                    user: 'vitorsilva@aluno.ufrb.edu.br',
+                    user: 'vitor@ligacolaborativa.site',
                     pass: process.env.PASSWORD_EMAIL,
                 },
             });
             let mailOptions = {
-                from: 'r.climaticas@gmail.com',
+                from: 'vitor@ligacolaborativa.site',
                 to: 'rafael@gamba.org.br',
                 subject: 'Novo Impacto Criado',
                 text: `

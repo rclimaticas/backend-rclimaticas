@@ -3,17 +3,18 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.ImpactsListController = void 0;
 const prisma_1 = require("../../utils/prisma");
 class ImpactsListController {
-    async list(req, res) {
-        const userId = parseInt(req.params.userId, 10);
-        if (isNaN(userId)) {
+    async index(req, res) {
+        const { userId } = req.params;
+        const numericUserId = Number(userId);
+        if (isNaN(numericUserId)) {
             return res.status(400).json({ error: "ID do usuário inválido." });
         }
         try {
             const impacts = await prisma_1.prisma.impacts.findMany({
-                where: { userId: userId },
-                orderBy: { date: 'desc' }, //ordena pelo mais recente
+                where: { userId: numericUserId },
+                orderBy: { date: 'desc' },
             });
-            if (!impacts.length) {
+            if (impacts.length === 0) {
                 return res.status(404).json({ message: "Nenhum impacto encontrado para este usuário." });
             }
             res.status(200).json(impacts);

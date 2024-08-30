@@ -23,33 +23,20 @@ var __importStar = (this && this.__importStar) || function (mod) {
     return result;
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.ImpactsCreateController = void 0;
+exports.NewsletterCreateController = void 0;
 const prisma_1 = require("../../utils/prisma");
 const nodemailer = __importStar(require("nodemailer"));
-class ImpactsCreateController {
+class NewsletterCreateController {
     async store(req, res) {
-        const { subject, urgency, locality, support, affectedCommunity, biomes, situation, contribution, userId } = req.body;
+        const { name, email } = req.body;
         try {
-            const newImpact = await prisma_1.prisma.impacts.create({
+            const newNewsletter = await prisma_1.prisma.newsletter.create({
                 data: {
-                    subject,
-                    urgency,
-                    locality,
-                    support,
-                    affectedCommunity,
-                    biomes,
-                    situation,
-                    contribution,
-                    date: new Date(),
-                    userId
+                    name,
+                    email,
+                    date: new Date()
                 },
             });
-            const user = await prisma_1.prisma.user.findUnique({
-                where: { id: userId },
-            });
-            if (!user) {
-                return res.status(404).json({ error: "Usuário não encontrado." });
-            }
             let transporter = nodemailer.createTransport({
                 service: 'gmail',
                 auth: {
@@ -60,31 +47,21 @@ class ImpactsCreateController {
             let mailOptions = {
                 from: 'r.climaticas@gmail.com',
                 to: 'rafael@gamba.org.br',
-                subject: 'Novo Impacto Criado',
+                subject: 'Novo Email cadastrado na Newsletter',
                 text: `
-                    Um novo impacto foi criado com os seguintes detalhes:
-                    Assunto: ${subject}
-                    Urgência: ${urgency}
-                    Localidade: ${locality}
-                    Suporte: ${support}
-                    Comunidade Afetada: ${affectedCommunity}
-                    Biomas: ${biomes}
-                    Situação: ${situation}
-                    Contribuição: ${contribution}
-                    ID do Usuário: ${userId}
-                    Nome do Usuário: ${user.username}
-                    E-mail do Usuário: ${user.email}
+                    Um novo email foi cadastrado na Newsletter:
+                    Email: ${email},
+                    Nome: ${name}
                     Data: ${new Date().toISOString()}
                 `,
             };
             // enviando o email
             await transporter.sendMail(mailOptions);
-            res.status(201).json(newImpact);
+            res.status(201).json(newNewsletter);
         }
         catch (error) {
-            console.error(error);
-            res.status(500).json({ error: "Erro ao criar o impacto." });
+            res.status(500).json({ error: "Erro ao criar o material." });
         }
     }
 }
-exports.ImpactsCreateController = ImpactsCreateController;
+exports.NewsletterCreateController = NewsletterCreateController;

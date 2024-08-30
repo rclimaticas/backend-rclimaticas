@@ -4,7 +4,7 @@ exports.MaterialDeleteController = void 0;
 const prisma_1 = require("../../utils/prisma");
 class MaterialDeleteController {
     async delete(req, res) {
-        const materialId = parseInt(req.params.id);
+        const materialId = parseInt(req.params.materialId);
         try {
             await prisma_1.prisma.material.delete({ where: { id: materialId } });
             res.json({ message: "Material excluído com sucesso." });
