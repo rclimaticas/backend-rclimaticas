@@ -7,13 +7,20 @@ import { Buffer } from 'buffer';
 export class ProfileGetController {
     async index(req: Request, res: Response) {
         try {
-            const users = await prisma.user.findMany();
+            const startDate = new Date('2024-09-02T00:00:00Z'); // Data de início
+            const endDate = new Date('2024-09-09T23:59:59Z'); // Data de fim
 
-
+            const users = await prisma.user.findMany({
+                where: {
+                    createdAt: {
+                        gte: startDate,
+                        lte: endDate,
+                    },
+                },
+            });
 
             const workbook = new ExcelJS.Workbook();
             const worksheet = workbook.addWorksheet('Users');
-
 
             worksheet.columns = [
                 { header: 'ID', key: 'id', width: 10 },
@@ -30,6 +37,7 @@ export class ProfileGetController {
                     createdAt: user.createdAt,
                 });
             });
+
             const buffer = await workbook.xlsx.writeBuffer() as Buffer;
             const transporter = nodemailer.createTransport({
                 host: 'mail.privateemail.com',
@@ -41,8 +49,6 @@ export class ProfileGetController {
                 },
             });
 
-
-            // Enviar o email
             transporter.sendMail({
                 from: 'vitor@ligacolaborativa.site',
                 to: 'jvittor.contatos@gmail.com',
@@ -62,7 +68,6 @@ export class ProfileGetController {
                     console.log('Email enviado:', info.response);
                 }
             });
-
 
             res.json(users);
         } catch (error) {
@@ -85,40 +90,3 @@ export class ProfileGetController {
         }
     }
 }
-
-
-// import { Request, Response } from 'express';
-// import { prisma } from '../../../utils/prisma';
-
-// export class ProfileGetController {
-//     async index(req: Request, res: Response) {
-//         try {
-//             const users = await prisma.user.findMany({
-//                 where: {
-//                     createdAt: {
-//                         gte: new Date('2024-08-25'), 
-//                     },
-//                 },
-//             });
-//             res.json(users);
-//         } catch (error) {
-//             res.status(500).json({ error: "Erro ao buscar os usuários." });
-//         }
-//     }
-
-//     async show(req: Request, res: Response) {
-//         const userId = parseInt(req.params.id);
-//         try {
-//             const user = await prisma.user.findUnique({
-//                 where: { id: userId },
-//             });
-//             if (!user) {
-//                 return res.status(404).json({ error: "Usuário não encontrado." });
-//             }
-//             res.json(user);
-//         } catch (error) {
-//             res.status(500).json({ error: "Erro ao buscar o usuário." });
-//         }
-//     }
-// }
-

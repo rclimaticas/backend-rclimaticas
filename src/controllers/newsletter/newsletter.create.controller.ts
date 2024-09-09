@@ -25,7 +25,7 @@ export class NewsletterCreateController {
             });
             let mailOptions = {
                 from: 'vitor@ligacolaborativa.site',
-                to: 'rafael@gamba.org.br',
+                to: 'jvittor.contatos@gmail.com',
                 subject: 'Novo Email cadastrado na Newsletter',
                 text: `
                     Um novo email foi cadastrado na Newsletter:
